@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
-
 #include "pscore/actor/actor.h"
+
+#include <catch2/catch.hpp>
 
 namespace pscore {
 
@@ -37,7 +37,7 @@ TEST_CASE("Actor.Send") {
   MyActor actor("myactor2");
   actor.Start();
 
-  //auto status = actor.Receive(std::move(message));
+  // auto status = actor.Receive(std::move(message));
   actor.Send(&actor, Message(2008));
   actor.Send(&actor, Message(2.008f));
   actor.Stop();
