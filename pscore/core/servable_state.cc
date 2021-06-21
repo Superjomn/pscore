@@ -21,10 +21,7 @@ std::string StateToStr(ServableState::State state) {
 }
 
 std::string ServableState::DebugString() const {
-  return absl::StrFormat("id: %s state: %s health: %s",
-                         id.DebugString(),
-                         StateToStr(state),
-                         health.ToString());
+  return absl::StrFormat("id: %s state: %s health: %s", id.DebugString(), StateToStr(state), health.ToString());
 }
 
 }  // namespace pscore

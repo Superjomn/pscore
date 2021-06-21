@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
-#include <catch2/catch.hpp>
-
 #include "pscore/core/any_ptr.h"
+
+#include <catch2/catch.hpp>
 
 namespace pscore {
 

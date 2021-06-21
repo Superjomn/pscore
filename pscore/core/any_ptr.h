@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <memory>
 #include <string>
+
 #include "pscore/common/type_util.h"
 
 namespace pscore {

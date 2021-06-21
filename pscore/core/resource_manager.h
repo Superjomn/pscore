@@ -3,6 +3,7 @@
 #include <absl/container/inlined_vector.h>
 #include <absl/strings/string_view.h>
 #include <absl/types/span.h>
+
 #include "pscore/core/resource.h"
 
 namespace pscore {
@@ -34,9 +35,7 @@ class ResourceManager {
   bool Reclaim(absl::string_view name, float size);
 
  private:
-  absl::flat_hash_map<std::string,
-                      absl::InlinedVector<std::unique_ptr<Resource>, 2>>
-      data_;
+  absl::flat_hash_map<std::string, absl::InlinedVector<std::unique_ptr<Resource>, 2>> data_;
 };
 
 }  // namespace pscore

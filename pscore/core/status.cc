@@ -1,4 +1,5 @@
 #include "pscore/core/status.h"
+
 #include "pscore/common/macros.h"
 
 namespace pscore {
@@ -34,7 +35,7 @@ Status &Status::operator=(const Status &s) {
   } else {
     if (state_) {
       state_->code = s.code();
-      state_->msg = s.error_message();
+      state_->msg  = s.error_message();
     } else {
       state_.reset(new State{s.code(), s.error_message()});
     }
@@ -70,9 +71,7 @@ std::string Status::ToString() const {
 
 namespace errors {
 
-Status Unimplemented(absl::string_view msg) {
-  return Status(Status::code_t::NOT_IMPLEMENTED, msg);
-}
+Status Unimplemented(absl::string_view msg) { return Status(Status::code_t::NOT_IMPLEMENTED, msg); }
 
 }  // namespace errors
 

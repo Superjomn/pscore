@@ -2,6 +2,7 @@
 
 #include <absl/strings/str_format.h>
 #include <absl/strings/string_view.h>
+
 #include "pscore/common/macros.h"
 
 namespace pscore {
@@ -20,9 +21,7 @@ class Resource {
   //! To return some Resource.
   virtual bool Recycle(const Resource& consumption) = 0;
 
-  std::string ToString() const {
-    return absl::StrFormat("{Resource %s size: %f}", name_, size_);
-  }
+  std::string ToString() const { return absl::StrFormat("{Resource %s size: %f}", name_, size_); }
 
  private:
   std::string name_;

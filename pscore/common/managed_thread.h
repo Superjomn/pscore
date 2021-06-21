@@ -1,8 +1,10 @@
 #pragma once
 
 #include <glog/logging.h>
+
 #include <functional>
 #include <thread>
+
 #include "pscore/common/common.h"
 #include "pscore/common/semaphore.h"
 

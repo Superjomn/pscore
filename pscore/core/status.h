@@ -1,7 +1,9 @@
 #pragma once
 
 #include <absl/strings/string_view.h>
+
 #include <memory>
+
 #include "pscore/core/pb/error_codes.pb.h"
 
 namespace pscore {
@@ -24,9 +26,7 @@ class Status {
   bool ok() const { return state_ == nullptr; }
 
   code_t code() const { return ok() ? code_t::OK : state_->code; }
-  const std::string& error_message() const {
-    return ok() ? EmptyString() : state_->msg;
-  }
+  const std::string& error_message() const { return ok() ? EmptyString() : state_->msg; }
 
   bool operator==(const Status& x) const;
   bool operator!=(const Status& x) const;

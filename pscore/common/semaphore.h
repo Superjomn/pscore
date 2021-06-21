@@ -1,10 +1,11 @@
 #pragma once
 
+#include <glog/logging.h>
 #include <semaphore.h>
 
-#include <glog/logging.h>
 #include <condition_variable>
 #include <mutex>
+
 #include "pscore/common/common.h"
 
 namespace pscore {

@@ -52,6 +52,7 @@ set(THIRD_PARTY_PATH "${CMAKE_BINARY_DIR}/third_party" CACHE STRING
 
 option(WITH_TESTING ON)
 set(WITH_TESTING ON)
+enable_testing()
 
 include(cmake/core.cmake)
 include(cmake/external/protobuf.cmake)

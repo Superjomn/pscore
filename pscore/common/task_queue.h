@@ -3,6 +3,7 @@
 #include <mutex>
 #include <queue>
 #include <string>
+
 #include "pscore/common/macros.h"
 
 namespace pscore {

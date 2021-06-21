@@ -32,12 +32,8 @@ struct ResourceTest : public Resource {
 
 }  // namespace
 
-
-
 }  // namespace pscore
 
 #define CATCH_CONFIG_MAIN
 
-int main() {
-  return 0;
-}
+int main() { return 0; }
