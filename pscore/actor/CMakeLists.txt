@@ -2,6 +2,7 @@ cc_library(pscore_actor
   SRCS
     actor.cc
     actor_logging.cc
+    actor_registry.cc
   DEPS
     pscore_common
     absl_base

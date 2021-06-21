@@ -14,3 +14,4 @@ CMakeFiles
 CTestTestfile.cmake
 *.json
 *.el
+update_compile_commands.sh
