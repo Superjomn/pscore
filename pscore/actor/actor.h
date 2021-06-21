@@ -39,6 +39,9 @@ struct Message {
   size_t type_id_{};
 };
 
+/**
+ * Base class for all the actors.
+ */
 class Actor : public ActorLogging {
  public:
   explicit Actor(absl::string_view name) : ActorLogging(name), name_(name) {}
@@ -47,7 +50,7 @@ class Actor : public ActorLogging {
    * User should implement this, to handle different kind of messages.
    * e.g.
    *
-   * Status Receieve(Message&& message) {
+   * Status Receive(Message&& message) {
    *   switch(message.type_id) {
    *     if (message.IsType<int>()): ACTOR_LOG(INFO) << "get an int!";
    *     else if (message.IsType<float>()) ACTOR_LOG(INFO) << "get a float!";

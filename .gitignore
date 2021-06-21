@@ -1,0 +1,16 @@
+.DS_Store
+.idea
+*.log
+tmp/
+
+cmake-build-debug
+build
+third_party
+Makefile
+pscore/*.cmake
+pscore/*/*.cmake
+pscore/*/*/*.cmake
+CMakeFiles
+CTestTestfile.cmake
+*.json
+*.el
