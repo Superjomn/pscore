@@ -1,8 +1,8 @@
 #pragma once
 
 #include <cstddef>
-#include <string>
 #include <memory>
+#include <string>
 #include "pscore/common/type_util.h"
 
 namespace pscore {
@@ -13,9 +13,7 @@ class AnyPtr {
   AnyPtr(std::nullptr_t) : AnyPtr() {}
 
   template <typename T>
-  AnyPtr(T* ptr)
-      : type_id_(FastTypeId<T>()),
-        ptr_(const_cast<void*>(reinterpret_cast<const void*>(ptr))) {}
+  AnyPtr(T* ptr) : type_id_(FastTypeId<T>()), ptr_(const_cast<void*>(reinterpret_cast<const void*>(ptr))) {}
 
   template <typename T>
   T* get() const {

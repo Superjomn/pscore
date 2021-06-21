@@ -16,3 +16,4 @@ cc_library(pscore_core
         )
 
 cc_test(test_pscore_resource SRCS resource_test.cc DEPS pscore_core)
+cc_test(test_any_ptr SRCS any_ptr_test.cc DEPS pscore_core)
