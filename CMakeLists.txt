@@ -45,6 +45,7 @@ ENDIF()
 find_package(Git REQUIRED)
 find_package(Threads REQUIRED)
 find_package(CUDA QUIET)
+find_package(Threads REQUIRED)
 
 
 set(THIRD_PARTY_PATH "${CMAKE_BINARY_DIR}/third_party" CACHE STRING
@@ -53,6 +54,7 @@ set(THIRD_PARTY_PATH "${CMAKE_BINARY_DIR}/third_party" CACHE STRING
 option(WITH_TESTING ON)
 set(WITH_TESTING ON)
 enable_testing()
+
 
 include(cmake/core.cmake)
 include(cmake/external/protobuf.cmake)
@@ -64,5 +66,6 @@ include(cmake/external/glog.cmake)
 include_directories("${CMAKE_SOURCE_DIR}")
 include_directories("${CMAKE_BINARY_DIR}")
 
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 
 add_subdirectory(pscore)

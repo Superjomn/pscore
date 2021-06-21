@@ -51,5 +51,8 @@ endfunction(ABSL_IMPORT_LIB)
 
 ABSL_IMPORT_LIB(base)
 ABSL_IMPORT_LIB(strings)
+ABSL_IMPORT_LIB(strings_internal)
+ABSL_IMPORT_LIB(str_format_internal)
+
 
 include_directories(${ABSL_INCLUDE_DIR})

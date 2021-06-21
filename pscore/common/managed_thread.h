@@ -38,9 +38,10 @@ class alignas(64) ManagedThread {
   }
 
   void Join() {
-    CHECK(active_);
-    sem_finish_.Wait();
-    active_ = false;
+    if (active_) {
+      sem_finish_.Wait();
+      active_ = false;
+    }
   }
 
  private:
