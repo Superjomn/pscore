@@ -20,12 +20,14 @@ class ActorRegistry {
  public:
   template <typename ActorT, typename... Ts>
   Status Register(const std::string& path, Ts... args) {
+    static_assert(std::is_base_of<Actor, ActorT>::value, "unexpected type");
     auto it = data_.find(path);
     if (it != data_.end()) {
       return Status(Status::code_t::UNKNOWN, "duplicate register Actor called [" + path + "]");
     }
 
-    data_[path].reset(new ActorT(args...));
+    data_[path] = new ActorT(args...);
+    return Status::OK();
   }
 
   /**
@@ -33,7 +35,7 @@ class ActorRegistry {
    */
   Actor* Lookup(const std::string& path) {
     auto it = data_.find(path);
-    if (it != data_.end()) return it->second.get();
+    if (it != data_.end()) return it->second;
     return nullptr;
   }
 
@@ -44,14 +46,13 @@ class ActorRegistry {
     }
   }
 
-  //! Singleton ActorRegistry instance shared by the process.
-  static ActorRegistry& Global() {
-    static std::unique_ptr<ActorRegistry> x(new ActorRegistry);
-    return *x;
-  }
+  size_t size() const { return data_.size(); }
+
+  ~ActorRegistry();
 
  private:
-  std::unordered_map<std::string, std::unique_ptr<Actor>> data_;
+  // NOTE The data is owned by the registry.
+  std::unordered_map<std::string, Actor*> data_;
 };
 
 }  // namespace pscore

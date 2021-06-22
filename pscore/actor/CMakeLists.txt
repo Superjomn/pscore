@@ -16,6 +16,16 @@ cc_test(test_pscore_actor
   SRCS actor_test.cc
   DEPS
   pscore_common
+  pscore_actor
+  Threads::Threads
+  pscore_status
+  )
+
+cc_test(test_pscore_actor_registry
+  SRCS actor_registry_test.cc
+  DEPS
+  pscore_common
+  pscore_actor
   Threads::Threads
   pscore_status
   )
