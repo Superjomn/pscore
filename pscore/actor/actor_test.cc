@@ -1,7 +1,8 @@
 #define CATCH_CONFIG_MAIN
+#include "pscore/actor/actor.h"
+
 #include <catch2/catch.hpp>
 
-#include "pscore/actor/actor.h"
 #include "pscore/actor/actor_test_utils.h"
 
 namespace pscore {

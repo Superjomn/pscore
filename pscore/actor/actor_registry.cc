@@ -1,5 +1,6 @@
-#include "pscore/actor/actor.h"
 #include "pscore/actor/actor_registry.h"
+
+#include "pscore/actor/actor.h"
 
 namespace pscore {
 

@@ -1,7 +1,8 @@
 #define CATCH_CONFIG_MAIN
+#include "pscore/actor/actor_registry.h"
+
 #include <catch2/catch.hpp>
 
-#include "pscore/actor/actor_registry.h"
 #include "pscore/actor/actor_test_utils.h"
 
 namespace pscore {
@@ -9,7 +10,7 @@ namespace pscore {
 TEST_CASE("ActorRegistry.Register") {
   ActorRegistry registry;
   auto res = registry.Register<MyActor>("./myactor", "myactor");
-  CHECK(res.ok());
+  REQUIRE(res.ok());
 
   res = registry.Register<MyActor>("./myactor", "myactor");
   CHECK(!res.ok());
@@ -18,20 +19,20 @@ TEST_CASE("ActorRegistry.Register") {
 TEST_CASE("ActorRegistry.Lookup") {
   ActorRegistry registry;
   auto res = registry.Register<MyActor>("/myactor", "myactor");
-  CHECK(res.ok());
+  REQUIRE(res.ok());
 
   auto* actor = registry.Lookup("/myactor");
-  CHECK(actor != nullptr);
+  REQUIRE(actor != nullptr);
 }
 
 TEST_CASE("ActorRegister.Erase") {
   ActorRegistry registry;
   auto res = registry.Register<MyActor>("/myactor", "myactor");
-  CHECK(res.ok());
+  REQUIRE(res.ok());
   registry.Erase("/myactor");
 
   auto* actor = registry.Lookup("/myactor");
-  CHECK(actor == nullptr);
+  REQUIRE(actor == nullptr);
 }
 
 }  // namespace pscore
