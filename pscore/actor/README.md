@@ -15,3 +15,40 @@ For each Actor, there might be some optimizations when it receive an message, bu
 
 All in all, by using the Actor model design, the complex model parallelism services can be decopuled and paratition into
 multiple independent Actors, easy for testing and better performance.  
+
+
+## Architecture
+
+- ActorContext, the global context of all the actor, can create a actor.
+- ActorRegistry, helps to register all the actors.
+- Actor, a specific Actor class.
+
+## Usages
+
+### Create or lookup an actor
+
+```c++
+ActorContext ctx;
+
+// get an actor with name of "ROOT/actor0"
+auto* actor0 = ctx.Create<Actor>("actor0");
+
+// get an actor with name of "ROOT/actor0/actor1"
+auto* actor1 = actor0->ActorOf<Actor>("actor1");
+
+// also get the actor1
+auto* also_actor1 = ctx.LookupActor("ROOT/actor0/actor1");
+```
+
+### Define an actor
+
+``` c++
+class MyActor : public Actor {
+public:
+    explicit MyActor(absl::string_view name) : Actor(name) {}
+    
+    Status Receive(Message && message) override {
+        // ...
+    }
+};
+```

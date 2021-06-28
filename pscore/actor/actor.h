@@ -75,11 +75,21 @@ class Actor : public ActorLogging {
   }
 
   /**
-   * Send a \p message to the \p destination identified by a string.
+   * The callback before starting the actor.
    */
-  virtual Status Send(absl::string_view destination, Message&& message) { ACTOR_LOG(FATAL) << "NotImplemented"; }
+  virtual Status PreStart() { return Status::OK(); }
 
-  void Start() {
+  /**
+   * The callback after the actor stops.
+   */
+  virtual Status PostStop() { return Status::OK(); }
+
+  Status Start() {
+    {
+      auto res = PreStart();
+      if (!res.ok()) return res;
+    }
+
     thread_.Start([this] {
       Message message;
       while (channel_.Read(&message)) {
@@ -90,6 +100,13 @@ class Actor : public ActorLogging {
         }
       }
     });
+
+    {
+      auto res = PostStop();
+      if (!res.ok()) return res;
+    }
+
+    return Status::OK();
   }
 
   void Stop() {
@@ -100,6 +117,12 @@ class Actor : public ActorLogging {
   const std::string& name() const { return name_; }
 
   virtual ~Actor() { thread_.Join(); }
+
+ protected:
+  /**
+   * Send a \p message to the \p destination identified by a string.
+   */
+  virtual Status Send(absl::string_view destination, Message&& message) { ACTOR_LOG(FATAL) << "NotImplemented"; }
 
  private:
   mutable Channel<Message> channel_;
