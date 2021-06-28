@@ -25,8 +25,6 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(Catch2 REQUIRED)
 include(Catch)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 if(NOT APPLE)
   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--as-needed")
 endif()

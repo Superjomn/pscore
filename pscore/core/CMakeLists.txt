@@ -18,9 +18,8 @@ cc_library(pscore_core
         DEPS
             pscore_status
             error_codes_proto
-            absl_base
+            absl::base
             glog
-            absl_base
         )
 
 cc_test(test_pscore_resource SRCS resource_test.cc DEPS pscore_core)

@@ -39,15 +39,20 @@ struct Message {
   size_t type_id_{};
 };
 
+class ActorContext;
+
+/**
+ * Base class for all the actors.
+ */
 class Actor : public ActorLogging {
  public:
-  explicit Actor(absl::string_view name) : ActorLogging(name), name_(name) {}
+  explicit Actor(ActorContext* ctx, absl::string_view name);
 
   /**
    * User should implement this, to handle different kind of messages.
    * e.g.
    *
-   * Status Receieve(Message&& message) {
+   * Status Receive(Message&& message) {
    *   switch(message.type_id) {
    *     if (message.IsType<int>()): ACTOR_LOG(INFO) << "get an int!";
    *     else if (message.IsType<float>()) ACTOR_LOG(INFO) << "get a float!";
@@ -72,11 +77,21 @@ class Actor : public ActorLogging {
   }
 
   /**
-   * Send a \p message to the \p destination identified by a string.
+   * The callback before starting the actor.
    */
-  virtual Status Send(absl::string_view destination, Message&& message) { ACTOR_LOG(FATAL) << "NotImplemented"; }
+  virtual Status PreStart() { return Status::OK(); }
 
-  void Start() {
+  /**
+   * The callback after the actor stops.
+   */
+  virtual Status PostStop() { return Status::OK(); }
+
+  Status Start() {
+    {
+      auto res = PreStart();
+      if (!res.ok()) return res;
+    }
+
     thread_.Start([this] {
       Message message;
       while (channel_.Read(&message)) {
@@ -87,7 +102,16 @@ class Actor : public ActorLogging {
         }
       }
     });
+
+    {
+      auto res = PostStop();
+      if (!res.ok()) return res;
+    }
+
+    return Status::OK();
   }
+
+  const std::string& address() { return address_; }
 
   void Stop() {
     channel_.Close();
@@ -98,12 +122,27 @@ class Actor : public ActorLogging {
 
   virtual ~Actor() { thread_.Join(); }
 
+ protected:
+  /**
+   * Send a \p message to the \p destination identified by a string.
+   */
+  virtual Status Send(absl::string_view destination, Message&& message) { ACTOR_LOG(FATAL) << "NotImplemented"; }
+
+  ActorContext* context() { return ctx_; }
+  const ActorContext* context() const { return ctx_; }
+
  private:
   mutable Channel<Message> channel_;
 
   ManagedThread thread_;
 
   std::string name_;
+
+  ActorContext* ctx_{};
+
+  std::string address_;
+
+  friend class ActorContext;
 };
 
 }  // namespace pscore

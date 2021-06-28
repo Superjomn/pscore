@@ -43,16 +43,7 @@ ExternalProject_Add(
         -DCMAKE_BUILD_TYPE:STRING=${THIRD_PARTY_BUILD_TYPE}
 )
 
-function(ABSL_IMPORT_LIB lib_name)
-    ADD_LIBRARY("absl_${lib_name}" STATIC IMPORTED GLOBAL)
-    SET_PROPERTY(TARGET "absl_${lib_name}" PROPERTY IMPORTED_LOCATION ${ABSL_INSTALL_DIR}/lib/libabsl_${lib_name}.a)
-    ADD_DEPENDENCIES("absl_${lib_name}" extern_absl)
-endfunction(ABSL_IMPORT_LIB)
-
-ABSL_IMPORT_LIB(base)
-ABSL_IMPORT_LIB(strings)
-ABSL_IMPORT_LIB(strings_internal)
-ABSL_IMPORT_LIB(str_format_internal)
+include(${ABSL_INSTALL_DIR}/lib/cmake/absl/abslTargets.cmake)
 
 
 include_directories(${ABSL_INCLUDE_DIR})
