@@ -6,9 +6,9 @@ namespace pscore {
 
 class MyActor : public Actor {
  public:
-  MyActor(absl::string_view name) : Actor(name) {}
+  MyActor(ActorContext* ctx, absl::string_view name) : Actor(ctx, name) {}
 
-  Status Receive(Message &&message) override {
+  Status Receive(Message&& message) override {
     if (message.IsType<int>()) {
       ACTOR_LOG(INFO) << "get an int: " << message.data<int>();
     } else if (message.IsType<float>()) {

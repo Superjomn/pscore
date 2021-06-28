@@ -4,11 +4,13 @@
 #include <catch2/catch.hpp>
 
 #include "pscore/actor/actor_test_utils.h"
+#include "pscore/actor/actor_context.h"
 
 namespace pscore {
 
 TEST_CASE("test_actor.Receive") {
-  MyActor actor("myactor");
+  ActorContext ctx;
+  MyActor actor(&ctx, "myactor");
   actor.Start();
 
   int val = 2008;
@@ -18,7 +20,8 @@ TEST_CASE("test_actor.Receive") {
 }
 
 TEST_CASE("Actor.Send") {
-  MyActor actor("myactor2");
+  ActorContext ctx;
+  MyActor actor(&ctx, "myactor2");
   actor.Start();
 
   // auto status = actor.Receive(std::move(message));

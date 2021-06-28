@@ -9,7 +9,7 @@
 
 namespace pscore {
 
-struct Actor;
+class Actor;
 
 /**
  * ActorRegistry helps to manage all the Actor instances within a process. All the actors are owned by the

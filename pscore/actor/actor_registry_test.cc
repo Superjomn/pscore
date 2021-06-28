@@ -4,21 +4,24 @@
 #include <catch2/catch.hpp>
 
 #include "pscore/actor/actor_test_utils.h"
+#include "pscore/actor/actor_context.h"
 
 namespace pscore {
 
 TEST_CASE("ActorRegistry.Register") {
+  ActorContext ctx;
   ActorRegistry registry;
-  auto res = registry.Register<MyActor>("./myactor", "myactor");
+  auto res = registry.Register<MyActor>("./myactor", &ctx, "myactor");
   REQUIRE(res.ok());
 
-  res = registry.Register<MyActor>("./myactor", "myactor");
+  res = registry.Register<MyActor>("./myactor", &ctx, "myactor");
   CHECK(!res.ok());
 }
 
 TEST_CASE("ActorRegistry.Lookup") {
   ActorRegistry registry;
-  auto res = registry.Register<MyActor>("/myactor", "myactor");
+  ActorContext ctx;
+  auto res = registry.Register<MyActor>("/myactor", &ctx, "myactor");
   REQUIRE(res.ok());
 
   auto* actor = registry.Lookup("/myactor");
@@ -27,7 +30,8 @@ TEST_CASE("ActorRegistry.Lookup") {
 
 TEST_CASE("ActorRegister.Erase") {
   ActorRegistry registry;
-  auto res = registry.Register<MyActor>("/myactor", "myactor");
+  ActorContext ctx;
+  auto res = registry.Register<MyActor>("/myactor", &ctx, "myactor");
   REQUIRE(res.ok());
   registry.Erase("/myactor");
 

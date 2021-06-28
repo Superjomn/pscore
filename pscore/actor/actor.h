@@ -39,12 +39,14 @@ struct Message {
   size_t type_id_{};
 };
 
+class ActorContext;
+
 /**
  * Base class for all the actors.
  */
 class Actor : public ActorLogging {
  public:
-  explicit Actor(absl::string_view name) : ActorLogging(name), name_(name) {}
+  explicit Actor(ActorContext* ctx, absl::string_view name);
 
   /**
    * User should implement this, to handle different kind of messages.
@@ -109,6 +111,8 @@ class Actor : public ActorLogging {
     return Status::OK();
   }
 
+  const std::string& address() { return address_; }
+
   void Stop() {
     channel_.Close();
     thread_.Join();
@@ -124,12 +128,21 @@ class Actor : public ActorLogging {
    */
   virtual Status Send(absl::string_view destination, Message&& message) { ACTOR_LOG(FATAL) << "NotImplemented"; }
 
+  ActorContext* context() { return ctx_; }
+  const ActorContext* context() const { return ctx_; }
+
  private:
   mutable Channel<Message> channel_;
 
   ManagedThread thread_;
 
   std::string name_;
+
+  ActorContext* ctx_{};
+
+  std::string address_;
+
+  friend class ActorContext;
 };
 
 }  // namespace pscore
